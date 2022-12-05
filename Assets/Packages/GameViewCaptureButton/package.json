@@ -1,0 +1,19 @@
+{
+    "name"       : "com.xjine.game_view_capture_button",
+    "displayName": "Game View Capture Button", 
+    "version"    : "1.0.0",               
+    "unity"      : "2021.3",
+    "description": "Add a button on the left side of toolbar to capture Game View.",
+    "author"     :
+    {
+        "name": "XJINE",
+        "url" : "https://github.com/XJINE"
+    },
+    "keywords":
+    [
+        "editor"
+    ],
+    "dependencies":
+    {
+    }
+}
