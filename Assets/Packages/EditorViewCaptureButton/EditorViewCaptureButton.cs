@@ -46,7 +46,8 @@ public class GameViewCaptureButton
             }
             else
             {
-                CaptureLastActiveSceneView(filePath);
+                // CaptureLastActiveSceneView(filePath);
+                CaptureSceneViewWithComponents(filePath);
             }
         }
 
@@ -71,6 +72,45 @@ public class GameViewCaptureButton
 
         File.WriteAllBytes(filePath, texture.EncodeToPNG());
 
+        Object.DestroyImmediate(texture);
+    }
+
+    private static void CaptureSceneViewWithComponents(string filePath)
+    {
+        // CAUTION:
+        // UnityEditorInternal.InternalEditorUtility.ReadScreenPixel not consider the scaling by Windows-OS.
+
+        var sceneView = EditorWindow.GetWindow(typeof(Editor).Assembly.GetType("UnityEditor.SceneView"));
+            sceneView.Focus();
+
+        var sceneViewPosition = sceneView.position.position;
+        var sceneViewWidth    = (int)sceneView.position.width;
+        var sceneViewHeight   = (int)sceneView.position.height;
+
+        // NOTE:
+        // There are some gap in captured image.
+
+        const int frameHeight    = 45;
+        const int noisyLeftFrame = 1;
+        const int aLittleHeight  = 18;
+        const int aLittleWidth   = 1;
+
+        sceneViewPosition.x += noisyLeftFrame;
+        sceneViewWidth      -= noisyLeftFrame;
+        sceneViewWidth      += aLittleWidth;
+
+        sceneViewPosition.y += frameHeight;
+        sceneViewHeight     -= frameHeight;
+        sceneViewHeight     += aLittleHeight;
+
+        var pixels = UnityEditorInternal.InternalEditorUtility
+            .ReadScreenPixel(sceneViewPosition, sceneViewWidth, sceneViewHeight);
+
+        var texture = new Texture2D(sceneViewWidth, sceneViewHeight, TextureFormat.RGB24, false);
+            texture.SetPixels(pixels);
+            texture.Apply();
+
+        File.WriteAllBytes(filePath, texture.EncodeToPNG());
         Object.DestroyImmediate(texture);
     }
 }
