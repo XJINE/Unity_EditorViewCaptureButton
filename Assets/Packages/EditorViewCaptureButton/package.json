@@ -1,0 +1,19 @@
+{
+    "name"       : "com.xjine.editor_view_capture_button",
+    "displayName": "Editor View Capture Button", 
+    "version"    : "2.0.0",
+    "unity"      : "2021.3",
+    "description": "Add buttons on the left side of toolbar to capture Scene and Game View.",
+    "author"     :
+    {
+        "name": "XJINE",
+        "url" : "https://github.com/XJINE"
+    },
+    "keywords":
+    [
+        "editor"
+    ],
+    "dependencies":
+    {
+    }
+}
